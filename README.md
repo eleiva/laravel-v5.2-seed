@@ -1,6 +1,6 @@
 # laravel-v5.2-seed
 
-Small laravel 5.2 site with authentication and a few views listing some models ( users and access logs )
+Small laravel 5.2 site with authentication , events and a few views listing some models ( users and access logs )
 
 ### Installation
 

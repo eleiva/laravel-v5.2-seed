@@ -36,7 +36,7 @@ class HomeController extends Controller
 
     public function users()
     {
-        $users = User::paginate(2);
+        $users = User::paginate(10);
         return view('users')->with('users',$users);
     }
 

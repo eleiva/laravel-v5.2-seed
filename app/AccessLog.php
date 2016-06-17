@@ -3,9 +3,11 @@
 namespace LaravelBootstrapSeed;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
-class AccessLog 
+class AccessLog extends Model
 {
+     protected $table = 'access_log';
     /**
      * The attributes that are mass assignable.
      *
@@ -20,4 +22,9 @@ class AccessLog
      *
      * @var array
      */
+
+    public function user()
+    {
+        return $this->belongsTo('LaravelBootstrapSeed\User');
+    }
 }

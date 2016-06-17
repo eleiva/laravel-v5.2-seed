@@ -4,6 +4,9 @@ namespace LaravelBootstrapSeed\Http\Controllers;
 
 use LaravelBootstrapSeed\Http\Requests;
 use Illuminate\Http\Request;
+use LaravelBootstrapSeed\User;
+use LaravelBootstrapSeed\AccessLog;
+
 
 class HomeController extends Controller
 {
@@ -14,7 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth',['except' => array('index')]);
     }
 
     /**
@@ -24,6 +27,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        if ( !\Auth::check() ){
+          return view('welcome');
+        } else {
+          return redirect('users');
+        }
     }
+
+    public function users()
+    {
+        $users = User::paginate(2);
+        return view('users')->with('users',$users);
+    }
+
+    public function accessLog()
+    {
+        $accessLogs = AccessLog::paginate(10);
+        return view('accesslog')->with('accessLogs',$accessLogs);
+    }
+
 }

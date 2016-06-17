@@ -13,8 +13,8 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'LaravelBootstrapSeed\Events\SomeEvent' => [
-            'LaravelBootstrapSeed\Listeners\EventListener',
+        'LaravelBootstrapSeed\Events\LoginEvent' => [
+            'LaravelBootstrapSeed\Listeners\LoginListener',
         ],
     ];
 

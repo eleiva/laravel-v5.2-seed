@@ -13,7 +13,7 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <link href="css/app.css" rel="stylesheet">
+    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
     <style>
         body {
@@ -72,22 +72,7 @@
         </div>
     </nav>
 
-     <div class="container">
-
-        <div class="row">
-
-            <div class="col-md-3">
-                <p class="lead">Menu</p>
-                <div class="list-group">
-                    <a href="{{ url('/users') }}" class="list-group-item {{ Request::is('*users*') ? 'active' : '' }}">Users</a>
-                    <a href="{{ url('/accessLog') }}" class="list-group-item {{ Request::is('accessLog') ? 'active' : '' }}">Access Log</a>
-                </div>
-            </div>
-            <div class="col-md-9">
-               @yield('content')
-            </div>
-        </div>
-    </div>
+    @yield('content')
 
     <!-- JavaScripts -->
     <script src="js/all.js"></script> 

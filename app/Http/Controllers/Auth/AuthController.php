@@ -7,6 +7,10 @@ use Validator;
 use LaravelBootstrapSeed\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Illuminate\Http\Request;
+
+use Event;
+use LaravelBootstrapSeed\Events\LoginEvent;
 
 class AuthController extends Controller
 {
@@ -28,7 +32,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/users';
 
     /**
      * Create a new authentication controller instance.
@@ -64,12 +68,29 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'first_name'  => $data['first_name'],
             'last_name'   => $data['last_name'],
             'phone'       => $data['phone'],
             'email'       => $data['email'],
             'password'    => bcrypt($data['password']),
         ]);
+        Event::fire(new LoginEvent( $user ));
+        return $user;
+    }
+ 
+    protected function handleUserWasAuthenticated(Request $request, $throttles)
+    {
+        Event::fire(new LoginEvent( \Auth::user() ));
+
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated')) {
+            return $this->authenticated($request, \Auth::user());
+        }
+
+        return redirect()->intended($this->redirectPath());
     }
 }
